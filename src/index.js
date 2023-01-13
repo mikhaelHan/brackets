@@ -1,8 +1,8 @@
-module.exports = function check(str, bracketsConfig) {
+const check = (str, bracketsConfig) => {
   let flag = true;
   const stack = [];
   str.split('').forEach(strElement => {
-    bracketsConfig.forEach(configElement => {  ///  |(
+    bracketsConfig.forEach(configElement => {
       if (strElement === configElement[0] && strElement === configElement[1]) {
         if (stack.length === 0) { stack.push(strElement) }
         else if (stack[stack.length - 1] !== configElement[0] && !stack.includes(strElement)) { stack.push(strElement) }
@@ -15,13 +15,11 @@ module.exports = function check(str, bracketsConfig) {
         stack.push(strElement);
       }
       else if (strElement === configElement[1] && strElement !== configElement[0]) {
-        if (stack.length !== 0 && stack[stack.length - 1] === configElement[0]) {
-          stack.pop();
-        }
-        else flag = false;
+        stack.length !== 0 && stack[stack.length - 1] === configElement[0] ? stack.pop() : flag = false;
       }
     })
   });
-  if (flag === true && stack.length === 0) return true;
-  else return false
+  return flag === true && stack.length === 0
 }
+
+module.exports = check;
